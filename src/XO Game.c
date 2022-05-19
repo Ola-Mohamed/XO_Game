@@ -493,6 +493,7 @@ void Display_Winner(char player)
 void displayDraw()
 {
 	GPIO_PORTF_DATA_R = 0x0E; // LED is white (draw game)
+	Clear_Led_Pin();
 	Blink_LEDS();
   Timer2_delay (500);
 	GPIO_PORTF_DATA_R = 0x00; // LED is dark  (end round)
