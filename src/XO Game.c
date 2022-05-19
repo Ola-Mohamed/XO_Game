@@ -452,3 +452,58 @@ int checkWinner(char player)
 	return 0; // there is no winner
 }
 
+
+
+/************************************************************************************
+ * Service Name:Display_Winner
+ * Parameters (in): None
+ * Return value: None
+ * Description: Function to display the winner of xo game
+ ************************************************************************************/
+void Display_Winner(char player)
+{
+	(player == 'X') ? xWins++ : oWins++; // for every round count winning times
+	Nokia5110_ClearBuffer();
+	Nokia5110_PrintBMP(0, 47, border, 0); // draw the game frame
+	Nokia5110_DisplayBuffer();
+	Nokia5110_SetCursor(2, 3);
+	Nokia5110_OutChar(player);
+	Nokia5110_OutString("-Player");
+	Nokia5110_SetCursor(4, 4);
+	Nokia5110_OutString("wins");
+	Timer2_delay (5000);
+	Nokia5110_DisplayBuffer();
+	//Nokia5110_Clear(); // clear the screen
+	Nokia5110_SetCursor(2, 3);
+	Nokia5110_OutString("X: ");
+	Nokia5110_OutUDec(xWins);
+	Nokia5110_SetCursor(2, 4);
+	Nokia5110_OutString("O: ");
+	Nokia5110_OutUDec(oWins);
+	Timer2_delay (5000);
+	Nokia5110_Clear(); // clear the screen
+}
+
+/************************************************************************************
+ * Service Name:displayDraw
+ * Parameters (in): None
+ * Return value: None
+ * Description: Function to be executed if a draw game
+ ************************************************************************************/
+void displayDraw()
+{
+	GPIO_PORTF_DATA_R = 0x0E; // LED is white (draw game)
+	Blink_LEDS();
+  Timer2_delay (500);
+	GPIO_PORTF_DATA_R = 0x00; // LED is dark  (end round)
+	Nokia5110_ClearBuffer();
+	Nokia5110_PrintBMP(0, 47, border, 0); // draw the game frame
+	Nokia5110_DisplayBuffer();
+	Nokia5110_SetCursor(2, 3);
+	Nokia5110_OutString("Game is");
+	Nokia5110_SetCursor(2, 4);
+	Nokia5110_OutString("a draw");
+  Timer2_delay (2000);
+	Nokia5110_Clear();
+}
+
