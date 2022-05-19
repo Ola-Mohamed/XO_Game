@@ -12,7 +12,7 @@ Without GPIOs we won’t have any other way to use a microcontroller and it will
 ![img](./assets/TM4C123GH6PM.png) 
 <img src="./assets/1.png" style="zoom: 70%;"/>
 
-For more understanding of this microcontroller programming please check the [recourses]() section where you will find the detailed datasheets and tutorials that will be of great advantage for any one starting in this field.
+For more understanding of this microcontroller programming please check the [recourses](https://github.com/Ola-Mohamed/XO_Game#resources) section where you will find the detailed datasheets and tutorials that will be of great advantage for any one starting in this field.
 
 > To Simulate the output of this program you can use KEIL software and go through this [tutorial](https://users.ece.utexas.edu/~valvano/edX/download.html) for installation.
 
