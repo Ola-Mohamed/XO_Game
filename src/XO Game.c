@@ -507,3 +507,75 @@ void displayDraw()
 	Nokia5110_Clear();
 }
 
+/************************************************************************************
+ * Service Name:displayStatus
+ * Parameters (in): None
+ * Return value: None
+ * Description: Function to show whose turn it is every play
+ ************************************************************************************/
+void displayStatus()
+{
+	Nokia5110_SetCursor(8, 1);
+	Nokia5110_OutChar('<');
+	Nokia5110_OutChar(turnMark);
+	Nokia5110_OutChar('>');
+	Nokia5110_SetCursor(8, 2);
+	Nokia5110_OutString("Turn");
+}
+/************************************************************************************
+ * Service Name: CheckPlayAgain
+ * Parameters (in): None
+ * Return value: None
+ * Description: function to check if want to play again or not
+ ************************************************************************************/
+int CheckPlayAgain()
+{
+	Nokia5110_ClearBuffer();
+	Nokia5110_PrintBMP(0, 47, border2, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (5000);
+	Nokia5110_ClearBuffer();
+	Nokia5110_PrintBMP(0, 47, border, 0); // draw the game frame
+	Nokia5110_DisplayBuffer();
+	Nokia5110_SetCursor(2, 3);
+	Nokia5110_OutString("SW1 |SW2");
+	Nokia5110_SetCursor(2, 4);
+	Nokia5110_OutString("Yes |No");
+	while (1)
+	{
+	//int SW1 = 0, SW2 = 0;
+		/*see which switch was pressed and act accordingly*/
+		//SW1 = Int1_Handler(); // read PF4 and wait untill release (SW1)
+		GPIOF_Handler();
+
+		if (Sw1Flag ==1){
+			Sw1Flag =0;
+			return 1;
+		}
+			//SW2 = Int2_Handler(); // read PF0 and wait untill release (SW2)
+		if (Sw2Flag ==1){
+			Sw2Flag =0;
+			return 0;
+	}
+ }
+}
+
+/************************************************************************************
+ * Service Name: outr
+ * Parameters (in): None
+ * Return value: None
+ * Description: function to out from game when fail
+ ************************************************************************************/
+void EndGame()
+{ // if sw2 is pressed (no rematch)
+	Nokia5110_ClearBuffer();
+	Nokia5110_PrintBMP(0, 47, border, 0);
+	Nokia5110_DisplayBuffer();
+	Nokia5110_SetCursor(2, 3);
+	Nokia5110_OutString("Goodbye");
+	Set_Led_Pin();
+	Timer2_delay (2000);
+	Clear_Led_Pin();
+	Nokia5110_Clear();
+}
+
