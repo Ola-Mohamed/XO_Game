@@ -150,7 +150,7 @@ void RunGame()
 	/*while (!(GPIO_PORTF_MIS_R & 0x10)){
 	GPIOF_Handler();
 	}
-		
+
 	while (!(GPIO_PORTF_MIS_R & 0x01)){
 	GPIOF_Handler();
 	}
@@ -165,7 +165,7 @@ void RunGame()
 		// note: Game matrix is drown row by row and starting from index 0
 			row = currentCell / 3; // ex: if currentCell = 5, so row = 1 , col = 2, and that's the true place of it
 			col = currentCell % 3;
-		
+
 		// while hovered
 		if (GameMatrix[currentCell] == 'X')
 		{
@@ -179,7 +179,7 @@ void RunGame()
 		{
 			Nokia5110_PrintBMP(col * (SQUAREHEIGHT - 1) + 3 * col, (row + 1) * (SQUAREHEIGHT - 1) + 3 * row, selectedSquare, 0);
 		}
-		
+
 		// while unhovered get the last indicies and draw previous art
 		if (lastCell == 8 || lastCell == -1)
 		{
@@ -219,10 +219,10 @@ void RunGame()
 			row = currentCell / 3; // ex: if currentCell = 5, so row = 1 , col = 2, and that's the true place of it
 			col = currentCell % 3;
 			// If Current Player is X
-			
+
 			if (turnMark == 'X')
 			{
-				
+
 				Nokia5110_PrintBMP(col * (SQUAREHEIGHT - 1) + 3 * col, (row + 1) * (SQUAREHEIGHT - 1) + 3 * row, X, 0); // draw x in the chosen cell
 				GameMatrix[currentCell] = turnMark;		// fill the matrix and take that place for X
 				Clear_Led_2();
@@ -253,7 +253,7 @@ void RunGame()
 				Nokia5110_PrintBMP(col * (SQUAREHEIGHT - 1) + 3 * col, (row + 1) * (SQUAREHEIGHT - 1) + 3 * row, O, 0);
 				GameMatrix[currentCell] = turnMark;
 				Clear_Led_3();
-				Set_Led_2();				
+				Set_Led_2();
 				if (checkWinner(turnMark))
 				{
 					Display_Winner(turnMark);
@@ -295,7 +295,7 @@ void RunGame()
 			}
 		}
 		else  // if the cell was already taken
-		{							  
+		{
 			Nokia5110_SetCursor(8, 3);
 			Nokia5110_OutString("Not");
 			Nokia5110_SetCursor(8, 4);
@@ -303,7 +303,7 @@ void RunGame()
 			Nokia5110_SetCursor(8, 5);
 			Nokia5110_OutString("Spot");
 
-			// Blink  LedS 3 times			
+			// Blink  LedS 3 times
 			Blink_LEDS();
 
 			displayStatus();
@@ -579,3 +579,21 @@ void EndGame()
 	Nokia5110_Clear();
 }
 
+/************************************************************************************
+ * Service Name: button_is_pressed
+ * Parameters (in): Unsigned char Flag
+ * Return value: None
+ * Description: function to check if button pressed
+ ************************************************************************************/
+
+unsigned char button_is_pressed(unsigned char flag)
+{
+	//the button is pressed when BUTTON_BIT is clear
+
+	if(flag == 1){
+       Timer2_delay (2000);
+		if (flag == 1)
+			return 1;
+	}
+	return 0;
+}
