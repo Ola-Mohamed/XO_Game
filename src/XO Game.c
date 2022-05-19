@@ -311,3 +311,144 @@ void RunGame()
 		Timer2_delay (2000);
 	}
 }
+
+/************************************************************************************
+ * Service Name:checkWinner
+ * Parameters (in): char player
+ * Return value: 0 or 1
+ * Description: Function to check if player x or o is winning or not
+ ************************************************************************************/
+
+int checkWinner(char player)
+{
+	int Winning_cell_1 = 0, Winning_cell_2 = 0, Winning_cell_3 = 0, i; // c: cell (they are 3 as 3 same connected cells are a must to win)
+	if (GameMatrix[0] == player && GameMatrix[1] == player && GameMatrix[2] == player)
+	{
+		Winning_cell_1 = 0;
+		Winning_cell_2 = 1;
+		Winning_cell_3 = 2;
+		i = 0;
+	}
+	else if (GameMatrix[3] == player && GameMatrix[4] == player && GameMatrix[5] == player)
+	{
+		Winning_cell_1 = 3;
+		Winning_cell_2 = 4;
+		Winning_cell_3 = 5;
+		i = 1;
+	}
+	else if (GameMatrix[6] == player && GameMatrix[7] == player && GameMatrix[8] == player)
+	{
+		Winning_cell_1 = 6;
+		Winning_cell_2 = 7;
+		Winning_cell_3 = 8;
+		i = 2;
+	}
+	else if (GameMatrix[0] == player && GameMatrix[3] == player && GameMatrix[6] == player)
+	{
+		Winning_cell_1 = 0;
+		Winning_cell_2 = 3;
+		Winning_cell_3 = 6;
+		i = 3;
+	}
+	else if (GameMatrix[1] == player && GameMatrix[4] == player && GameMatrix[7] == player)
+	{
+		Winning_cell_1 = 1;
+		Winning_cell_2 = 4;
+		Winning_cell_3 = 7;
+		i = 4;
+	}
+	else if (GameMatrix[2] == player && GameMatrix[5] == player && GameMatrix[8] == player)
+	{
+		Winning_cell_1 = 2;
+		Winning_cell_2 = 5;
+		Winning_cell_3 = 8;
+		i = 5;
+	}
+	else if (GameMatrix[0] == player && GameMatrix[4] == player && GameMatrix[8] == player)
+	{
+		Winning_cell_1 = 0;
+		Winning_cell_2 = 4;
+		Winning_cell_3 = 8;
+		i = 6;
+	}
+	else if (GameMatrix[2] == player && GameMatrix[4] == player && GameMatrix[6] == player)
+	{
+		Winning_cell_1 = 2;
+		Winning_cell_2 = 4;
+		Winning_cell_3 = 6;
+		i = 7;
+	}
+	if (Winning_cell_1 || Winning_cell_2 || Winning_cell_2)
+	{
+		if (player == 'X')
+		{ /*Hoovering the 3 selected winning cells*/
+			Nokia5110_PrintBMP((Winning_cell_1 % 3) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_1 % 3), (Winning_cell_1 / 3 + 1) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_1 / 3), selectedX, 0);
+			Nokia5110_PrintBMP((Winning_cell_2 % 3) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_2 % 3), (Winning_cell_2 / 3 + 1) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_2 / 3), selectedX, 0);
+			Nokia5110_PrintBMP((Winning_cell_3 % 3) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_3 % 3), (Winning_cell_3 / 3 + 1) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_3 / 3), selectedX, 0);
+			Clear_Led_Pin();
+			Blink_LEDS_2();
+			Clear_Led_Pin();
+			GPIO_PORTF_DATA_R = 0x04; // LED is blue (X won)
+			Nokia5110_DisplayBuffer();
+		}
+		else
+		{
+			Nokia5110_PrintBMP((Winning_cell_1 % 3) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_1 % 3), (Winning_cell_1 / 3 + 1) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_1 / 3), selectedO, 0);
+			Nokia5110_PrintBMP((Winning_cell_2 % 3) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_2 % 3), (Winning_cell_2 / 3 + 1) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_2 / 3), selectedO, 0);
+			Nokia5110_PrintBMP((Winning_cell_3 % 3) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_3 % 3), (Winning_cell_3 / 3 + 1) * (SQUAREHEIGHT - 1) + 3 * (Winning_cell_3 / 3), selectedO, 0);
+			Clear_Led_Pin();
+			Blink_LEDS_3();
+			Clear_Led_Pin();
+			GPIO_PORTF_DATA_R = 0x08; // LED is green  (O won)
+			Nokia5110_DisplayBuffer();
+		}
+		/*draw the strike line with pixels (dots) on the 3 hoovered winning cells*/
+		if (i == 0)
+		{
+			for (i = 0; i < 48; i++)
+				Nokia5110_SetPixel(i, 6);
+		}
+		else if (i == 1)
+		{
+			for (i = 0; i < 48; i++)
+				Nokia5110_SetPixel(i, 23);
+		}
+		else if (i == 2)
+		{
+			for (i = 0; i < 48; i++)
+				Nokia5110_SetPixel(i, 40);
+		}
+		else if (i == 3)
+		{
+			for (i = 0; i < 48; i++)
+				Nokia5110_SetPixel(6, i);
+		}
+		else if (i == 4)
+		{
+			for (i = 0; i < 48; i++)
+				Nokia5110_SetPixel(23, i);
+		}
+		else if (i == 5)
+		{
+			for (i = 0; i < 48; i++)
+				Nokia5110_SetPixel(40, i);
+		}
+		else if (i == 6)
+		{
+			for (i = 0; i < 48; i++)
+				Nokia5110_SetPixel(i, i);
+		}
+		else if (i == 7)
+		{
+			for (i = 0; i < 48; i++)
+				Nokia5110_SetPixel(i, 47 - i);
+		}
+		Nokia5110_DisplayBuffer();
+		Timer2_delay (500);
+		GPIO_PORTF_DATA_R = 0x00; // LED is dark (end of round)
+		Clear_Led_Pin();
+		return 1; // there is a winner
+	}
+	return 0; // there is no winner
+}
+
