@@ -156,7 +156,7 @@ As you can notice the screen is 84x48 pixels in dimension and every pixel can be
 
 > below are screenshots from the program while running
 
-![Screenshot (./assets/Screenshot (10).png)](./assets/Screenshot (10).png)
+ <img src="./assets/Screenshot (10).png" alt="Screenshot (10)" style="zoom: 100%:"/>
 
 <img src="H:\Colleage\3\Second Term\Test\project\XO-game\assets\Screenshot (11).png" alt="Screenshot (11)" style="zoom:90%;" />
 
