@@ -185,12 +185,11 @@ This Project was created due to the efforts of all the team members and their in
 <table>
   <tr>
     <td align="center"><a href="https://github.com/BU9D4DDY"><img src="https://avatars.githubusercontent.com/u/93094639?v=4" width="100px;" alt=""/><br /><sub><b>Diaa Eldein Hassan</b></sub></a><br /></td>
-    </tr>
-    <tr>
     <td align="center"><a href="https://github.com/Red-Cloud2000"><img src="https://avatars.githubusercontent.com/u/61296209?v=4" width="100px;" alt=""/><br /><sub><b>Abdelrahman Hesham</b></sub></a><br /></td>
-    </tr>
-    <tr>
-    <td align="center"><a href="https://github.com/Ola-Mohamed"><img src="https://avatars.githubusercontent.com/u/66176966?v=4" width="100px;" alt=""/><br /><sub><b>Ola MohamedAhmed</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/Ola-Mohamed"><img src="https://avatars.githubusercontent.com/u/66176966?v=4" width="100px;" alt=""/><br /><sub><b>Ola Mohamed Ahmed</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/ahmedokka29"><img src="https://avatars.githubusercontent.com/u/56696104?v=4" width="100px;" alt=""/><br /><sub><b>Ahmed Gamal Mostafa</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/RamziMohamad"><img src="https://avatars.githubusercontent.com/u/66510024?v=4" width="100px;" alt=""/><br /><sub><b>Ramzi Mohamed</b></sub></a><br /></td>
+    <td align="center"><a href="https://github.com/Abdelrahman-Atef-Elsayed"><img src="https://avatars.githubusercontent.com/u/66162676?v=4" width="100px;" alt=""/><br /><sub><b>Abdelrahman Atef</b></sub></a><br /></td>
     </tr>
 </table>
 
