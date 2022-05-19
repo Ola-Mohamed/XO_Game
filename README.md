@@ -158,11 +158,11 @@ As you can notice the screen is 84x48 pixels in dimension and every pixel can be
 
  <img src="./assets/Screenshot (10).png" alt="Screenshot (10)" style="zoom: 100%:"/>
 
-<img src="H:\Colleage\3\Second Term\Test\project\XO-game\assets\Screenshot (11).png" alt="Screenshot (11)" style="zoom:90%;" />
+ <img src="./assets/Screenshot (11).png" alt="Screenshot (11)" style="zoom: 100%:"/>
 
 <img src="./assets/Screenshot (12).png" alt="Screenshot (12)" style="zoom:125%;" />
 
-![Screenshot (./assets/Screenshot (13).png)](./assets/Screenshot (13).png)
+<img src="./assets/Screenshot (13).png" alt="Screenshot (13)" style="zoom: 100%:"/>
 
 **To Run this project on External Hardware follow the same steps as before exept for**
 
