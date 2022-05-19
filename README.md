@@ -10,7 +10,7 @@ The TM4C123G is a member of the class of high performance 32 bit ARM cortex M4 m
 Without GPIOs we won’t have any other way to use a microcontroller and it will be nothing more different than a chunk of well-fabricated silicon. Through them we can interface both transducers or sensors and actuators. We can also connect other devices like a display, external devices and so on.The GPIOs of TM4C123 Tiva C ARM microcontrollers are very elaborate, having many options that are usually unavailable in common 8-bit microcontrollers and below we are providing a diagram for more ease in understanding it.
 
 ![img](./assets/TM4C123GH6PM.png) 
-<img src="./assets/1.png" />
+<img src="./assets/1.png" / style="zoom: 70%;"/>
 
 For more understanding of this microcontroller programming please check the [recourses]() section where you will find the detailed datasheets and tutorials that will be of great advantage for any one starting in this field.
 
