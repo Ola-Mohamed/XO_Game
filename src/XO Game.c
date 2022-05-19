@@ -81,3 +81,56 @@ void GameInitialization()
 	for (i = 0; i < 9; i++)
 		GameMatrix[i] = ' '; // erase all drawings in cells matrix
 }
+
+/************************************************************************************
+ * Service Name:DrawClearGameMatrix
+ * Parameters (in): None
+ * Return value: None
+ * Description: Function for drawing X O boxes and player turn
+ ************************************************************************************/
+
+void DrawClearGameMatrix()
+{
+	Nokia5110_ClearBuffer();
+	// square is defined in gameArt to make the shape of the 9 squares of the game
+	Nokia5110_PrintBMP(0, (SQUAREHEIGHT - 1), square, 0); // Nokia5110_printBMP(x_cor , y_cor , pointer_to_image (square or VL) , threshold(0 or 1))
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP((SQUAREHEIGHT - 1) + 3, (SQUAREHEIGHT - 1), square, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP(2 * (SQUAREHEIGHT - 1) + 6, (SQUAREHEIGHT - 1), square, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP(0, 2 * (SQUAREHEIGHT - 1) + 3, square, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP((SQUAREHEIGHT - 1) + 3, 2 * (SQUAREHEIGHT - 1) + 3, square, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP(2 * (SQUAREHEIGHT - 1) + 6, 2 * (SQUAREHEIGHT - 1) + 3, square, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP(0, 3 * (SQUAREHEIGHT - 1) + 6, square, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP((SQUAREHEIGHT - 1) + 3, 3 * (SQUAREHEIGHT - 1) + 6, square, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP(2 * (SQUAREHEIGHT - 1) + 6, 3 * (SQUAREHEIGHT - 1) + 6, square, 0);
+	Nokia5110_DisplayBuffer();
+	Timer2_delay (500);
+
+	Nokia5110_PrintBMP(3 * (SQUAREHEIGHT - 1) + 9, (VH - 1), verticalLine, 0);
+	Nokia5110_DisplayBuffer();
+
+	displayStatus(); // to show whose player turn is it now
+}
