@@ -1,3 +1,12 @@
+/******************************************************************************
+ * Module:XO Game
+ *
+ * File Name: XO Game.h
+ *
+ * Description: Header file for XO Game
+ *
+ * Authors: Ola Mohamed - Abdelrhman Atef - Abdelrhman Hesham -Diaa Eldin Hassan -Ahmed Gamal - Rammzi Muhammed
+ ******************************************************************************/
 
 /*******************************************************************************
  *                      Function Prototypes                                    *
@@ -34,5 +43,5 @@ void EndGame(void);
 /*Function for clear data */
 void DrawClearGameMatrix(void);
 
-
+/*Function for Check Press of button*/
 unsigned char button_is_pressed(unsigned char flag);
