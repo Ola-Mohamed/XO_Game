@@ -43,24 +43,24 @@ extern unsigned char Sw1Flag,Sw2Flag;  // flags to to check if switches are pres
  ************************************************************************************/
 void GameIntro(void)
 {
-	Nokia5110_PrintBMP(0, 47, introbg, 0); // darwing the frame of welcome window
-	Nokia5110_DisplayBuffer();	// display that window
+	Nokia5110_PrintBMP(0, 47, introbg, 0);     // darwing the frame of welcome window
+	Nokia5110_DisplayBuffer();	           // display that window
 	Timer2_delay (3000);
-	Nokia5110_Clear(); // clear the whole screen
-	Nokia5110_SetCursor(1, 2);			   // set cursor at first X place on the screen and the 3rd y to be nearly in the middle
+	Nokia5110_Clear();                         // clear the whole screen
+	Nokia5110_SetCursor(1, 2);	           // set cursor at first X place on the screen and the 3rd y to be nearly in the middle
 	Nokia5110_OutString("Welcome To");	   // write this string to screen
 	Nokia5110_SetCursor(1, 4);
 	Nokia5110_OutString(" XO Game");
 	Timer2_delay (5000);
-	Nokia5110_Clear(); // clear the whole screen
+	Nokia5110_Clear();                        // clear the whole screen
   	Nokia5110_SetCursor(2, 2);
 	Nokia5110_OutString("X-Player");
 	Nokia5110_SetCursor(1, 4);
 	Nokia5110_OutString("Plays First");
-	Set_Led_Pin();
+	Set_Led_Pin();                            // ON LEDS
 	Timer2_delay (5000);
-	Clear_Led_Pin();
-	Nokia5110_Clear(); // clear the whole screen
+	Clear_Led_Pin();                         //OFF LEDS
+	Nokia5110_Clear();                       // clear the whole screen
 }
 
 /************************************************************************************
@@ -72,13 +72,13 @@ void GameIntro(void)
 void GameInitialization()
 {
 	int i;
-	playedCells = 0;  // make all cells available to play at
+	playedCells = 0;               // make all cells available to play at
 	Timer2_delay (5000);
-	turnMark = 'X';	  // first player is always X
+	turnMark = 'X';	              // first player is always X
 	Set_Led_2();
-	currentCell = -1; // no cells are hovered or selected
+	currentCell = -1;             // no cells are hovered or selected
 	for (i = 0; i < 9; i++)
-		GameMatrix[i] = ' '; // erase all drawings in cells matrix
+		GameMatrix[i] = ' ';  // erase all drawings in cells matrix
 }
 
 /************************************************************************************
@@ -570,10 +570,10 @@ void EndGame()
  ************************************************************************************/
 unsigned char button_is_pressed(unsigned char flag)
 {
-	//the button is pressed when BUTTON_BIT is clear
+	//the button is pressed when BUTTON_BIT is clear 
 
 	if(flag == 1){
-        Timer2_delay (2000);
+        Timer2_delay (2000);      //For Debouns
 		if (flag == 1)
 			return 1;
 	}
