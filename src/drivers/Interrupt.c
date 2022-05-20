@@ -26,7 +26,7 @@ unsigned char Sw1Flag=0,Sw2Flag=0;
 
 /* SW1 is connected to PF4 pin, SW2 is connected to PF0. */
 /* Both of them trigger PORTF falling edge interrupt */
-void GPIOF_Handler(void)
+void  GPIOPortF_Handler(void)
 {	
 	
   if (GPIO_PORTF_MIS_R & 0x10) /* check if interrupt causes by PF4/SW1*/
