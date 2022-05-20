@@ -176,9 +176,9 @@ As you can notice the screen is 84x48 pixels in dimension and every pixel can be
 
 * step 5: you don't need the peripherals this time you just go and click on `run` and voila ....
 
-> **A full simulation along with hardware connections can be found in the following Video** 
+> **A full simulation along with hardware connections can be found in the following Youtube playlist** 
 >
-> > Video goes here ................
+> > https://www.youtube.com/watch?v=jiRQCX_ZiRY&list=PLfC786XN_7ardn9MaRfMBg2Hkes_tDTGj
 
 ## Here's a flowchart so you don't get lost
 ![XOgameFlowChart](https://user-images.githubusercontent.com/61296209/169411828-1f413b1c-fce6-4dd5-acee-0c0528242089.png)
