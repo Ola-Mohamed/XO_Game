@@ -14,7 +14,6 @@
 #include "./headers/GameArt.h"
 #include "./headers/XO Game.h"
 #include "./headers/Timer.h"
-#include "./headers/Interrupt.h"
 #include "./headers/LED.h"
 
 /*******************************************************************************
@@ -27,8 +26,7 @@ int playedCells, currentCell;
 
 char turnMark, GameMatrix[9], xWins = 0, oWins = 0;
 
-extern unsigned char Sw1Flag,Sw2Flag;  // flags to to check if switches are pressed and released and act on them
-
+extern unsigned char Sw1Flag, Sw2Flag;
 
 /*******************************************************************************
  *                              Functions                                      *
@@ -41,26 +39,27 @@ extern unsigned char Sw1Flag,Sw2Flag;  // flags to to check if switches are pres
  * Return value: None
  * Description: function to enter to the game
  ************************************************************************************/
+
 void GameIntro(void)
 {
-	Nokia5110_PrintBMP(0, 47, introbg, 0);     // darwing the frame of welcome window
-	Nokia5110_DisplayBuffer();	           // display that window
-	Timer2_delay (3000);
-	Nokia5110_Clear();                         // clear the whole screen
-	Nokia5110_SetCursor(1, 2);	           // set cursor at first X place on the screen and the 3rd y to be nearly in the middle
+	Nokia5110_PrintBMP(0, 47, introbg, 0); // darwing the frame of welcome window
+	Nokia5110_DisplayBuffer();			   // display that window
+	Timer2_delay(30);					   // 3 seconds
+	Nokia5110_Clear();					   // clear the whole screen
+	Nokia5110_SetCursor(1, 2);			   // set cursor at first X place on the screen and the 3rd y to be nearly in the middle
 	Nokia5110_OutString("Welcome To");	   // write this string to screen
 	Nokia5110_SetCursor(1, 4);
 	Nokia5110_OutString(" XO Game");
-	Timer2_delay (5000);
-	Nokia5110_Clear();                        // clear the whole screen
-  	Nokia5110_SetCursor(2, 2);
+	Timer2_delay(50);
+	Nokia5110_Clear(); // clear the whole screen
+	Nokia5110_SetCursor(2, 2);
 	Nokia5110_OutString("X-Player");
 	Nokia5110_SetCursor(1, 4);
 	Nokia5110_OutString("Plays First");
-	Set_Led_Pin();                            // ON LEDS
-	Timer2_delay (5000);
-	Clear_Led_Pin();                         //OFF LEDS
-	Nokia5110_Clear();                       // clear the whole screen
+	Set_Led_Pin();
+	Timer2_delay(50);
+	Clear_Led_Pin();
+	Nokia5110_Clear(); // clear the whole screen
 }
 
 /************************************************************************************
@@ -72,13 +71,13 @@ void GameIntro(void)
 void GameInitialization()
 {
 	int i;
-	playedCells = 0;               // make all cells available to play at
-	Timer2_delay (5000);
-	turnMark = 'X';	              // first player is always X
-	Set_Led_2();
-	currentCell = -1;             // no cells are hovered or selected
+	playedCells = 0;  // make all cells available to play at
+	turnMark = 'X';	  // first player is always X
+	currentCell = -1; // no cells are hovered or selected
 	for (i = 0; i < 9; i++)
-		GameMatrix[i] = ' ';  // erase all drawings in cells matrix
+		GameMatrix[i] = ' '; // erase all drawings in cells matrix
+	Timer2_delay(50);
+	Set_Led_2();
 }
 
 /************************************************************************************
@@ -87,45 +86,46 @@ void GameInitialization()
  * Return value: None
  * Description: Function for drawing X O boxes and player turn
  ************************************************************************************/
+
 void DrawClearGameMatrix()
 {
 	Nokia5110_ClearBuffer();
 	// square is defined in gameArt to make the shape of the 9 squares of the game
 	Nokia5110_PrintBMP(0, (SQUAREHEIGHT - 1), square, 0); // Nokia5110_printBMP(x_cor , y_cor , pointer_to_image (square or VL) , threshold(0 or 1))
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP((SQUAREHEIGHT - 1) + 3, (SQUAREHEIGHT - 1), square, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP(2 * (SQUAREHEIGHT - 1) + 6, (SQUAREHEIGHT - 1), square, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP(0, 2 * (SQUAREHEIGHT - 1) + 3, square, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP((SQUAREHEIGHT - 1) + 3, 2 * (SQUAREHEIGHT - 1) + 3, square, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP(2 * (SQUAREHEIGHT - 1) + 6, 2 * (SQUAREHEIGHT - 1) + 3, square, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP(0, 3 * (SQUAREHEIGHT - 1) + 6, square, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP((SQUAREHEIGHT - 1) + 3, 3 * (SQUAREHEIGHT - 1) + 6, square, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP(2 * (SQUAREHEIGHT - 1) + 6, 3 * (SQUAREHEIGHT - 1) + 6, square, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (500);
+	Timer2_delay(5);
 
 	Nokia5110_PrintBMP(3 * (SQUAREHEIGHT - 1) + 9, (VH - 1), verticalLine, 0);
 	Nokia5110_DisplayBuffer();
@@ -142,17 +142,18 @@ void DrawClearGameMatrix()
 void RunGame()
 {
 	int row, col, lastRow, lastCol, lastCell;
-	GPIOF_Handler();
-	if(button_is_pressed(Sw1Flag))
-	{Sw1Flag =0;
-		lastCell = currentCell; //store the cell location before moving to next one
+
+	if (Sw1Flag)
+	{
+		Sw1Flag = 0;
+		lastCell = currentCell; // store the cell location before moving to next one
 		currentCell++;
 		if (currentCell == 9)
-			currentCell = 0;  // loop back to the beginning
-		// get the certain cell to play on
-		// note: Game matrix is drown row by row and starting from index 0
-			row = currentCell / 3; // ex: if currentCell = 5, so row = 1 , col = 2, and that's the true place of it
-			col = currentCell % 3;
+			currentCell = 0;   // loop back to the beginning
+							   // get the certain cell to play on
+							   // note: Game matrix is drown row by row and starting from index 0
+		row = currentCell / 3; // ex: if currentCell = 5, so row = 1 , col = 2, and that's the true place of it
+		col = currentCell % 3;
 
 		// while hovered
 		if (GameMatrix[currentCell] == 'X')
@@ -195,13 +196,14 @@ void RunGame()
 		}
 		Nokia5110_DisplayBuffer();
 		displayStatus();
-		Timer2_delay (2000);
+		Timer2_delay(20);
 	}
-	if((button_is_pressed(Sw2Flag)) && currentCell != -1)
-	{ Sw2Flag =0;
+	if (Sw2Flag && currentCell != -1)
+	{
+		Sw2Flag = 0;
 		// confirm that switch 2 is pressed and there is a selected cell
 		if (GameMatrix[currentCell] == ' ')
-		{ 	// if nothing in the cell
+		{ // if nothing in the cell
 			// get the certain cell to play on
 			// note: Game Matrix is drown row by row and starting from index 0
 			row = currentCell / 3; // ex: if currentCell = 5, so row = 1 , col = 2, and that's the true place of it
@@ -212,7 +214,7 @@ void RunGame()
 			{
 
 				Nokia5110_PrintBMP(col * (SQUAREHEIGHT - 1) + 3 * col, (row + 1) * (SQUAREHEIGHT - 1) + 3 * row, X, 0); // draw x in the chosen cell
-				GameMatrix[currentCell] = turnMark;		// fill the matrix and take that place for X
+				GameMatrix[currentCell] = turnMark;																		// fill the matrix and take that place for X
 				Clear_Led_2();
 				Set_Led_3();
 				if (checkWinner(turnMark))
@@ -222,13 +224,13 @@ void RunGame()
 					{ // want to play again?
 						GameInitialization();
 						DrawClearGameMatrix();
-						return; 	  // return to main while(1) loop which will call RunGame() again
+						return; // return to main while(1) loop which will call RunGame() again
 					}
 					else
-					{			 // no enough playing, time to study
-						EndGame(); 	 // goodBye
-						while (1); 	 // an unbreakable infinite loop after clearing screen by EndGame()
-							  
+					{			   // no enough playing, time to study
+						EndGame(); // goodBye
+						while (1)
+							; // an unbreakable infinite loop after clearing screen by EndGame()
 					}
 				}
 				// if game has no winner yet switch to player O
@@ -263,8 +265,9 @@ void RunGame()
 			}
 			Nokia5110_DisplayBuffer();
 			displayStatus();
+			// currentCell = -1;
 			playedCells++;
-			if (playedCells == 9) //Game finished with no winner
+			if (playedCells == 9) // Game finished with no winner
 			{
 				displayDraw();
 				if (CheckPlayAgain())
@@ -276,12 +279,12 @@ void RunGame()
 				else
 				{
 					EndGame();
-					while (1);
-						
+					while (1)
+						;
 				}
 			}
 		}
-		else  // if the cell was already taken
+		else // if the cell was already taken
 		{
 			Nokia5110_SetCursor(8, 3);
 			Nokia5110_OutString("Not");
@@ -295,7 +298,7 @@ void RunGame()
 
 			displayStatus();
 		}
-		Timer2_delay (2000);
+		Timer2_delay(20);
 	}
 }
 
@@ -305,6 +308,7 @@ void RunGame()
  * Return value: 0 or 1
  * Description: Function to check if player x or o is winning or not
  ************************************************************************************/
+
 int checkWinner(char player)
 {
 	int Winning_cell_1 = 0, Winning_cell_2 = 0, Winning_cell_3 = 0, i; // c: cell (they are 3 as 3 same connected cells are a must to win)
@@ -430,15 +434,13 @@ int checkWinner(char player)
 				Nokia5110_SetPixel(i, 47 - i);
 		}
 		Nokia5110_DisplayBuffer();
-		Timer2_delay (500);
+		Timer2_delay(5);
 		GPIO_PORTF_DATA_R = 0x00; // LED is dark (end of round)
 		Clear_Led_Pin();
 		return 1; // there is a winner
 	}
 	return 0; // there is no winner
 }
-
-
 
 /************************************************************************************
  * Service Name:Display_Winner
@@ -448,7 +450,7 @@ int checkWinner(char player)
  ************************************************************************************/
 void Display_Winner(char player)
 {
-	(player == 'X') ? xWins++ : oWins++;  // for every round count winning times
+	(player == 'X') ? xWins++ : oWins++; // for every round count winning times
 	Nokia5110_ClearBuffer();
 	Nokia5110_PrintBMP(0, 47, border, 0); // draw the game frame
 	Nokia5110_DisplayBuffer();
@@ -457,15 +459,16 @@ void Display_Winner(char player)
 	Nokia5110_OutString("-Player");
 	Nokia5110_SetCursor(4, 4);
 	Nokia5110_OutString("wins");
-	Timer2_delay (5000);
+	Timer2_delay(50);
 	Nokia5110_DisplayBuffer();
+	// Nokia5110_Clear(); // clear the screen
 	Nokia5110_SetCursor(2, 3);
 	Nokia5110_OutString("X: ");
 	Nokia5110_OutUDec(xWins);
 	Nokia5110_SetCursor(2, 4);
 	Nokia5110_OutString("O: ");
 	Nokia5110_OutUDec(oWins);
-	Timer2_delay (5000);
+	Timer2_delay(50);
 	Nokia5110_Clear(); // clear the screen
 }
 
@@ -478,9 +481,8 @@ void Display_Winner(char player)
 void displayDraw()
 {
 	GPIO_PORTF_DATA_R = 0x0E; // LED is white (draw game)
-	Clear_Led_Pin();
 	Blink_LEDS();
-  	Timer2_delay (500);
+	Timer2_delay(5);
 	GPIO_PORTF_DATA_R = 0x00; // LED is dark  (end round)
 	Nokia5110_ClearBuffer();
 	Nokia5110_PrintBMP(0, 47, border, 0); // draw the game frame
@@ -489,7 +491,7 @@ void displayDraw()
 	Nokia5110_OutString("Game is");
 	Nokia5110_SetCursor(2, 4);
 	Nokia5110_OutString("a draw");
-  	Timer2_delay (2000);
+	Timer2_delay(20);
 	Nokia5110_Clear();
 }
 
@@ -519,7 +521,7 @@ int CheckPlayAgain()
 	Nokia5110_ClearBuffer();
 	Nokia5110_PrintBMP(0, 47, border2, 0);
 	Nokia5110_DisplayBuffer();
-	Timer2_delay (5000);
+	Timer2_delay(50);
 	Nokia5110_ClearBuffer();
 	Nokia5110_PrintBMP(0, 47, border, 0); // draw the game frame
 	Nokia5110_DisplayBuffer();
@@ -529,25 +531,25 @@ int CheckPlayAgain()
 	Nokia5110_OutString("Yes |No");
 	while (1)
 	{
-		/*see which switch was pressed and act accordingly*/
-		GPIOF_Handler();
-
-		if (Sw1Flag ==1){
-			Sw1Flag =0;
+		if (Sw1Flag == 1)
+		{
+			Sw1Flag = 0;
 			return 1;
 		}
-		if (Sw2Flag ==1){
-			Sw2Flag =0;
+
+		if (Sw2Flag == 1)
+		{
+			Sw2Flag = 0;
 			return 0;
+		}
 	}
-    }
 }
 
 /************************************************************************************
- * Service Name: EndGame
+ * Service Name: outr
  * Parameters (in): None
  * Return value: None
- * Description: function to out from game when mum knows you are not studying
+ * Description: function to out from game when fail
  ************************************************************************************/
 void EndGame()
 { // if sw2 is pressed (no rematch)
@@ -557,25 +559,7 @@ void EndGame()
 	Nokia5110_SetCursor(2, 3);
 	Nokia5110_OutString("Goodbye");
 	Set_Led_Pin();
-	Timer2_delay (2000);
+	Timer2_delay(20);
 	Clear_Led_Pin();
 	Nokia5110_Clear();
-}
-
-/************************************************************************************
- * Service Name: button_is_pressed
- * Parameters (in): Unsigned char Flag
- * Return value: None
- * Description: function to check if button pressed
- ************************************************************************************/
-unsigned char button_is_pressed(unsigned char flag)
-{
-	//the button is pressed when BUTTON_BIT is clear 
-
-	if(flag == 1){
-        Timer2_delay (2000);      //For Debouns
-		if (flag == 1)
-			return 1;
-	}
-	return 0;
 }

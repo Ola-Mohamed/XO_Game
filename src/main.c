@@ -12,18 +12,17 @@
 #include "./headers/TExaS.h"
 #include "./headers/GPIO.h"
 #include "./headers/XO Game.h"
-#include "./headers/Interrupt.h"
 
 int main(void)
 {
 	TExaS_Init(SSI0_Real_Nokia5110_Scope);
 
 	PortF_Init(); // intialization Port F
-	
+
 	PortB_Init();
-	
+
 	Nokia5110_Init(); // intialization Nokia Lcd
-	
+
 	Nokia5110_ClearBuffer(); // Clear buffer for nokia lcd
 
 	Nokia5110_DisplayBuffer(); // draw buffer

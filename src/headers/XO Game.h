@@ -12,7 +12,6 @@
  *                      Function Prototypes                                    *
  *******************************************************************************/
 
-
 /*Function to enter to the game */
 void GameIntro(void);
 
@@ -43,5 +42,4 @@ void EndGame(void);
 /*Function for clear data */
 void DrawClearGameMatrix(void);
 
-/*Function for Check Press of button*/
-unsigned char button_is_pressed(unsigned char flag);
+void WaitForInterrupt(void);
